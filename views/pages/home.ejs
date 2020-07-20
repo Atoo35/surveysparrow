@@ -1,0 +1,82 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+
+</head>
+<body >
+  <div id="wrapper">
+  <% include ../partials/header %>
+    <div id="content-wrapper" class="d-flex flex-column" style="padding-left:10px; padding-top:15px">
+      <h1 class="h2 mb-4 text-gray-800">Home</h1>
+      <div class="row" style="padding:15px">
+        <h1 class="h4 mb-4 text-gray-800">Add New URL</h1>
+        <div class="input-group mb-3" style="margin-right: 15px;">
+             <input type="text" name="url" class="form-control" placeholder="Enter URL">
+             <div class="input-group-append">
+               <button class="btn btn-success" style="width: 150px">Add</button>
+             </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <%if(list.length>0){%>
+        <%for(var i=list.length-1;i>=0;i--){%>
+          <div class="col-lg-8" style="margin-bottom:10px">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                       <div class="col mr-2">
+                          <div class="text-lg font-weight-bold text-primary text-uppercase "><%=list[i].shortened%></div>
+                          <div class="h6 mb-1 font-weight-bold "><%=list[i].url%></div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <hr>
+        <%}%>
+        <%}else{%>
+          <div class="col-lg-8" style="margin-bottom:10px">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                       <div class="col mr-2">
+                          <div class="text-lg font-weight-bold text-primary text-uppercase ">No URLs found</div>
+
+                       </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <%}%>
+      </div>
+
+      <br/>
+
+  </div>
+<footer>
+<% include ../partials/footer %>
+</footer>
+
+<script>
+$(document).ready(function(){
+  $("li").each(function(){
+    var name = $(this).attr("id");
+    console.log(name);
+    if(name=="home")
+    $(this).addClass("active");
+    else {
+      $(this).removeClass("active")
+    }
+  })
+
+})
+</script>
+
+</body>
+
+</html>
