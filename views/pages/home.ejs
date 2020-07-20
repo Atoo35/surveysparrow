@@ -22,22 +22,24 @@
         </div>
 
       </div>
+      <h5>Try clicking on the shortened urls</h5>
       <div class="row">
         <%if(list.length>0){%>
         <%for(var i=list.length-1;i>=0;i--){%>
-          <div class="col-lg-8" style="margin-bottom:10px">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                       <div class="col mr-2">
-                          <div class="text-lg font-weight-bold text-primary"><%=list[i].shortened%></div>
-                          <div class="h6 mb-1 font-weight-bold "><%=list[i].url%></div>
-                       </div>
-                    </div>
-                </div>
+
+            <div class="col-lg-8" style="margin-bottom:10px">
+              <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                         <div class="col mr-2">
+                            <div class="text-lg font-weight-bold text-primary">  <a href=<%=list[i].url%> target="_blank"><%=list[i].shortened%></a></div>
+                            <div class="h6 mb-1 font-weight-bold "><%=list[i].url%></div>
+                         </div>
+                      </div>
+                  </div>
+              </div>
             </div>
-          </div>
-          <hr>
+
         <%}%>
         <%}else{%>
           <div class="col-lg-8" style="margin-bottom:10px">
