@@ -3,10 +3,9 @@ var passport = require("passport");
 var mongoUtil = require('../mongoUtil')
 var User = require("../models/User");
 const fs = require('fs');
+var crypto = require("crypto");
 const fetch = require('node-fetch')
-const { exec } = require('child_process');
-const { execSync } = require('child_process');
-const bashrc='/home/atoo/.bashrc';
+var validUrl = require('valid-url');
 var userController = {};
 
 // Restrict access to root page
@@ -23,7 +22,26 @@ userController.home = function(req, res) {
 
 };
 
-
+userController.addUrl = function(req,res){
+  if (!validUrl.isUri(req.body.url)){
+    console.log('Looks like an URI');
+    res.send('Invalid URL')
+    return;
+}
+  var db = mongoUtil.getDb();
+  const collection = db.db('node-auth').collection("users");
+  var shortenedUrl='https://short.end/'+crypto.randomBytes(3).toString('hex');
+  var data={
+    url:req.body.url,
+    shortened:shortenedUrl
+  }
+  collection.updateOne(
+    {'username':req.user.username},
+    {$push:{'list':data}}
+  ).then((dat)=>{
+    console.log(dat)
+    res.send('done')})
+}
 userController.register = function(req, res) {
   res.render('pages/register');
 };

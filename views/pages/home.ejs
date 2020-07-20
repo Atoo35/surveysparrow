@@ -15,9 +15,9 @@
       <div class="row" style="padding:15px">
         <h1 class="h4 mb-4 text-gray-800">Add New URL</h1>
         <div class="input-group mb-3" style="margin-right: 15px;">
-             <input type="text" name="url" class="form-control" placeholder="Enter URL">
+             <input type="text" id='addNewUrl' name="url" class="form-control" placeholder="Enter URL (http/https format)">
              <div class="input-group-append">
-               <button class="btn btn-success" style="width: 150px">Add</button>
+               <button id='add' class="btn btn-success" style="width: 150px">Add</button>
              </div>
         </div>
 
@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                        <div class="col mr-2">
-                          <div class="text-lg font-weight-bold text-primary text-uppercase "><%=list[i].shortened%></div>
+                          <div class="text-lg font-weight-bold text-primary"><%=list[i].shortened%></div>
                           <div class="h6 mb-1 font-weight-bold "><%=list[i].url%></div>
                        </div>
                     </div>
@@ -74,6 +74,24 @@ $(document).ready(function(){
     }
   })
 
+})
+$('#add').click(function(){
+  var getURL=$('#addNewUrl').val()
+  var url={
+    url:getURL
+  }
+  $.ajax({
+    type:"PUT",
+    url:"/api/addnew/",
+    headers:{"Content-Type":"application/json"},
+    data:JSON.stringify(url),
+    success:function(data){
+      if(data==='Invalid URL')
+      alert(data)
+      else
+      location.reload()
+    }
+  })
 })
 </script>
 

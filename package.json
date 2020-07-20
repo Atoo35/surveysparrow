@@ -7,17 +7,18 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
-    "mongodb": "^3.5.9",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-session": "^1.17.0",
     "http-errors": "~1.6.3",
+    "mongodb": "^3.5.9",
     "mongoose": "^5.9.6",
     "morgan": "~1.9.1",
     "node-fetch": "2.6.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^6.0.1"
+    "passport-local-mongoose": "^6.0.1",
+    "valid-url": "^1.0.9"
   }
 }

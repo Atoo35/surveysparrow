@@ -7,7 +7,7 @@ router.get('/', auth.login);
 router.get('/home', auth.home);
 router.get('/logout',auth.logout)
 
-
+router.put('/api/addnew',auth.addUrl)
 router.get('/register',auth.register);
 router.get('/401',auth.unauthorized);
 
