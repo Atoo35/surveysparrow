@@ -20,22 +20,36 @@ userController.home = function(req, res) {
 
 
 };
-userController.redirect = function(req,res){
+userController.redirect = async function(req,res){
   // if(req.params.code === '1234')
   // res.redirect('https://www.google.co.in')
+  if(req.params.code === 'register'){
+  res.render('pages/register')
+  return
+  }
   var db = mongoUtil.getDb();
   const links=db.db('node-auth').collection('Links')
-
-  links.findOne({'links.code':req.body.code}).then((dat)=>{
-    if(dat){
-      console.log(dat)
-      res.redirect(dat.links[0].original)
+  var dat =await links.findOne({'name':'allLinks'})
+  // console.log(dat)
+  for(let i in dat.links){
+    // console.log(dat.links[i])
+    if(dat.links[i].code === req.params.code){
+      res.redirect(dat.links[i].original)
       return
     }
-    else{
-      res.render('pages/401')
-    }
-  })
+  }
+  res.render('pages/401')
+  // .then((dat)=>{
+  //   console.log(dat)
+  //   if(dat){
+  //     console.log(dat)
+  //     res.redirect(dat.links[0].original)
+  //     return
+  //   }
+  //   else{
+  //     res.render('pages/401')
+  //   }
+  // })
 }
 
 userController.addUrl = function(req,res){
