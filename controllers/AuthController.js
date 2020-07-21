@@ -8,7 +8,6 @@ const fetch = require('node-fetch')
 var validUrl = require('valid-url');
 var userController = {};
 
-// Restrict access to root page
 userController.home = function(req, res) {
   if(!req.user)
     res.render('pages/401')
@@ -21,6 +20,23 @@ userController.home = function(req, res) {
 
 
 };
+userController.redirect = function(req,res){
+  // if(req.params.code === '1234')
+  // res.redirect('https://www.google.co.in')
+  var db = mongoUtil.getDb();
+  const links=db.db('node-auth').collection('Links')
+
+  links.findOne({'links.code':req.body.code}).then((dat)=>{
+    if(dat){
+      console.log(dat)
+      res.redirect(dat.links[0].original)
+      return
+    }
+    else{
+      res.render('pages/401')
+    }
+  })
+}
 
 userController.addUrl = function(req,res){
   if (!validUrl.isUri(req.body.url)){
@@ -30,11 +46,21 @@ userController.addUrl = function(req,res){
 }
   var db = mongoUtil.getDb();
   const collection = db.db('node-auth').collection("users");
-  var shortenedUrl='https://short.end/'+crypto.randomBytes(3).toString('hex');
+  const links=db.db('node-auth').collection('Links')
+  var code=crypto.randomBytes(3).toString('hex');
+  var shortenedUrl='https://surveysparrow1.herokuapp.com/'+code
+  var linkSave={
+    code:code,
+    original:req.body.url
+  }
   var data={
     url:req.body.url,
     shortened:shortenedUrl
   }
+  links.updateOne(
+    {'name':'allLinks'},
+    {$push:{'links':linkSave}}
+  )
   collection.updateOne(
     {'username':req.user.username},
     {$push:{'list':data}}
