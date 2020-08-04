@@ -6,7 +6,7 @@ app.use(express.json({extended: false}))
 
 //DBL webhooks
 app.post('/dblwebhook', async (req, res) => {
-  console.log(req.headers)
+  console.log(req)
   if(req.headers.authorization) {
     if(req.headers.authorization === config.webhook_secret) {
       await thingToDo(req.vote);
