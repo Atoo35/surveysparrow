@@ -22,7 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb+srv://Parzival:anish123@savagebot-uyept.mongodb.net/node-auth?authSource=admin&replicaSet=SavageBot-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true',{useUnifiedTopology:true,useNewUrlParser:true})
+mongoose.connect('',{useUnifiedTopology:true,useNewUrlParser:true})
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
 // view engine setup
