@@ -10,10 +10,10 @@ var indexRouter = require('./routes/index');
 var mongoUtil = require('./mongoUtil')
 
 
-mongoUtil.connectToServer( function( err, client ) {
-  if (err) console.log(err);
-  // start the rest of your app here
-} );
+// mongoUtil.connectToServer(function (err, client) {
+//   if (err) console.log(err);
+//   // start the rest of your app here
+// });
 
 var app = express();
 
@@ -22,15 +22,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 mongoose.Promise = global.Promise;
 
-mongoose.connect('',{useUnifiedTopology:true,useNewUrlParser:true})
-  .then(() =>  console.log('connection succesful'))
+mongoose.connect(process.env.mongoUri, { useUnifiedTopology: true, useNewUrlParser: true })
+  .then(() => console.log('connection succesful'))
   .catch((err) => console.error(err));
 // view engine setup
 
 app.use(require('express-session')({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -50,12 +50,12 @@ app.use('/', indexRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
